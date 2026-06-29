@@ -5,8 +5,7 @@ import json
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
-IBM_DIR = PROJECT_ROOT / "docs" / "ibm"
-ROCKET_DIR = PROJECT_ROOT / "docs" / "rocket"
+DOCS_DIR = PROJECT_ROOT / "docs"
 
 OUTPUT_FILE = PROJECT_ROOT / "db" / "chunks.json"
 
@@ -24,7 +23,7 @@ def extract_text(pdf_path):
                 text += page_text + "\n"
 
         except Exception as e:
-            print(f"Error reading page: {e}")
+            print(f"Error reading {pdf_path.name}: {e}")
 
     return text
 
@@ -37,38 +36,89 @@ splitter = RecursiveCharacterTextSplitter(
 all_chunks = []
 
 
-def process_directory(directory, vendor):
+def detect_vendor(folder_name):
 
-    for pdf_file in directory.glob("*.pdf"):
+    folder = folder_name.lower()
 
-        print(f"Processing {pdf_file.name}")
+    if folder == "ibm":
+        return "IBM"
 
-        text = extract_text(pdf_file)
+    if folder == "rocket":
+        return "ROCKET"
 
-        chunks = splitter.split_text(text)
+    if folder == "redbooks":
+        return "IBM REDBOOK"
 
-        print(f"Chunks Created: {len(chunks)}")
+    if folder == "ibm_redbooks":
+        return "IBM REDBOOK"
 
-        for idx, chunk in enumerate(chunks):
+    if folder == "incidents":
+        return "INTERNAL"
 
-            all_chunks.append({
-                "source": pdf_file.name,
-                "vendor": vendor,
-                "chunk_id": idx,
-                "text": chunk
-            })
+    if folder == "internal":
+        return "INTERNAL"
+
+    if folder == "github_docs":
+        return "COMMUNITY"
+
+    return "OTHER"
 
 
-# Process IBM Documents
-process_directory(IBM_DIR, "IBM")
+pdf_files = sorted(DOCS_DIR.rglob("*.pdf"))
 
-# Process Rocket Documents
-process_directory(ROCKET_DIR, "ROCKET")
+print(f"\nFound {len(pdf_files)} PDF documents\n")
 
-# Save chunks
-with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-    json.dump(all_chunks, f, ensure_ascii=False, indent=2)
+for pdf_file in pdf_files:
 
-print("\n====================")
-print(f"Total Chunks Saved: {len(all_chunks)}")
-print(f"Output File: {OUTPUT_FILE}")
+    category = pdf_file.parent.name
+
+    vendor = detect_vendor(category)
+
+    print("=" * 60)
+    print(f"Processing : {pdf_file.name}")
+    print(f"Category   : {category}")
+    print(f"Vendor     : {vendor}")
+
+    text = extract_text(pdf_file)
+
+    print(f"Characters : {len(text)}")
+
+    chunks = splitter.split_text(text)
+
+    print(f"Chunks     : {len(chunks)}")
+
+    for idx, chunk in enumerate(chunks):
+
+        all_chunks.append({
+
+            "source": pdf_file.name,
+
+            "vendor": vendor,
+
+            "category": category,
+
+            "chunk_id": idx,
+
+            "text": chunk
+
+        })
+
+with open(
+    OUTPUT_FILE,
+    "w",
+    encoding="utf-8"
+) as f:
+
+    json.dump(
+        all_chunks,
+        f,
+        indent=2,
+        ensure_ascii=False
+    )
+
+print("\n" + "=" * 60)
+print("Chunk Generation Completed")
+print("=" * 60)
+print(f"Documents : {len(pdf_files)}")
+print(f"Chunks    : {len(all_chunks)}")
+print(f"Saved To  : {OUTPUT_FILE}")
