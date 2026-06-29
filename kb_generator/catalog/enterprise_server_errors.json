@@ -1,0 +1,38 @@
+vi [
+  {
+    "title":"Enterprise Server Region Startup Failure",
+
+    "technology":"Enterprise Server",
+
+    "possible_causes":[
+
+      "Port already used",
+
+      "License expired",
+
+      "Runtime mismatch",
+
+      "Configuration corruption"
+
+    ],
+
+    "diagnostics":[
+
+      "mfesdi",
+
+      "netstat -an",
+
+      "systemctl status es"
+
+    ],
+
+    "resolutions":[
+
+      "Restart region",
+
+      "Update license",
+
+      "Correct configuration"
+    ]
+  }
+]

@@ -1,0 +1,43 @@
+You are a Senior Mainframe Migration SME.
+
+Expand the following incident into an enterprise Knowledge Base article.
+
+The knowledge article should resemble an internal migration knowledge repository used by experienced migration engineers.
+
+Write in detail.
+
+The article should include:
+
+1. Overview
+
+2. Symptoms
+
+3. Environment
+
+4. Investigation
+
+5. Diagnostic Commands
+
+6. Root Cause Analysis
+
+7. Resolution Steps
+
+8. Validation Steps
+
+9. Prevention
+
+10. Lessons Learned
+
+11. Best Practices
+
+12. Related IBM Documentation
+
+13. Related Rocket Enterprise Server Documentation
+
+Include Linux commands, Enterprise Server commands, COBOL snippets, configuration examples and troubleshooting wherever applicable.
+
+Write approximately 1500-2000 words.
+
+Incident Details
+
+{incident}

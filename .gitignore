@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+
+# Virtual Environment
+venv/
+.env
+
+# ChromaDB
+db/chroma/
+
+# Python cache
+.pytest_cache/
+.mypy_cache/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Environment Variables
+.env
+
+# Large Generated Files
+*.log
+*.tmp
+
+# Model Cache
+.cache/
+
+# Generated Knowledge Base (optional)
+kb_generator/output/
+
+# Local Databases
+*.sqlite3
+
+# Bytecode
+*.pyo
+
+# Temporary
+tmp/
+
+# Notebook
+.ipynb_checkpoints/

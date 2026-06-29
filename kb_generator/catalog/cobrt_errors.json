@@ -1,0 +1,24 @@
+[
+  {
+    "code":"COBRT114",
+    "title":"Attempt to access item beyond bounds",
+    "severity":"High",
+    "technology":"Runtime",
+    "possible_causes":[
+      "Incorrect COBDIR",
+      "Corrupted runtime",
+      "Runtime mismatch",
+      "Invalid pointer"
+    ],
+    "diagnostics":[
+      "echo $COBDIR",
+      "cob -V",
+      "env | grep COB"
+    ],
+    "resolutions":[
+      "Update COBDIR",
+      "Verify runtime",
+      "Restart Enterprise Server"
+    ]
+  }
+]

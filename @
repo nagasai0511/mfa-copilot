@@ -1,0 +1,99 @@
+[
+  {
+    "id":"INC-001",
+
+    "title":"COBRT114 Runtime Error",
+
+    "technology":"Enterprise Server",
+
+    "severity":"High",
+
+    "symptoms":[
+
+      "COBRT114",
+
+      "Application terminates",
+
+      "Runtime initialization failure"
+
+    ],
+
+    "root_cause":"Incorrect COBDIR after runtime migration.",
+
+    "resolution":[
+
+      "Verify COBDIR",
+
+      "Verify COBPATH",
+
+      "Restart Enterprise Server"
+
+    ],
+
+    "commands":[
+
+      "echo $COBDIR",
+
+      "env | grep COB",
+
+      "cob -V"
+
+    ],
+
+    "keywords":[
+
+      "COBRT114",
+
+      "Runtime",
+
+      "Enterprise Server"
+
+    ]
+  },
+
+  {
+    "id":"INC-002",
+
+    "title":"File Status 39",
+
+    "technology":"VSAM",
+
+    "severity":"Medium",
+
+    "symptoms":[
+
+      "File Status 39",
+
+      "OPEN failed"
+
+    ],
+
+    "root_cause":"Mismatch between file definition and COBOL FD.",
+
+    "resolution":[
+
+      "Validate file layout",
+
+      "Compare FD",
+
+      "Rebuild file"
+
+    ],
+
+    "commands":[
+
+      "cat file.def",
+
+      "ls -l"
+
+    ],
+
+    "keywords":[
+
+      "VSAM",
+
+      "File Status 39"
+
+    ]
+  }
+]

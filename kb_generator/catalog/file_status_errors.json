@@ -1,0 +1,33 @@
+[
+  {
+    "code":"39",
+    "title":"File attribute conflict",
+
+    "technology":"VSAM",
+
+    "possible_causes":[
+
+      "FD mismatch",
+
+      "Record length mismatch",
+
+      "Wrong organization"
+
+    ],
+
+    "diagnostics":[
+
+      "cat fd",
+
+      "file filename"
+
+    ],
+
+    "resolutions":[
+
+      "Correct FD",
+
+      "Recreate dataset"
+    ]
+  }
+]
