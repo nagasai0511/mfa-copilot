@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mfa-copilot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mfa-copilot
+  template:
+    metadata:
+      labels:
+        app: mfa-copilot
+    spec:
+      containers:
+        - name: mfa-copilot
+          image: mfa-copilot:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8501
+          env:
+            - name: GROQ_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: mfa-copilot-secrets
+                  key: groq-api-key
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 2Gi
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8501
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8501
+            initialDelaySeconds: 60
+            periodSeconds: 20
+          volumeMounts:
+            - name: chroma-data
+              mountPath: /app/db/chroma
+      volumes:
+        - name: chroma-data
+          persistentVolumeClaim:
+            claimName: mfa-copilot-chroma-pvc

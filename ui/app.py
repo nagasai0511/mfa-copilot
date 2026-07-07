@@ -46,9 +46,10 @@ def load_chroma():
 
 @st.cache_resource
 def load_groq():
-    return Groq(
-        api_key=os.environ["GROQ_API_KEY"]
-    )
+    api_key = os.getenv("GROQ_API_KEY", "").strip()
+    if not api_key:
+        return None
+    return Groq(api_key=api_key)
 
 embedding_model = load_embedding_model()
 collection = load_chroma()
@@ -80,6 +81,10 @@ question = st.text_input(
 # --------------------------------
 
 if st.button("Search"):
+
+    if groq_client is None:
+        st.error("GROQ_API_KEY is not set. Configure it before running queries.")
+        st.stop()
 
     with st.spinner("Searching knowledge base..."):
 

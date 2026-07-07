@@ -1,0 +1,18 @@
+services:
+  mfa-copilot:
+    build: .
+    image: mfa-copilot:latest
+    container_name: mfa-copilot
+    ports:
+      - "8501:8501"
+    environment:
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+    volumes:
+      - ./db/chroma:/app/db/chroma
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8501/_stcore/health').read()"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
